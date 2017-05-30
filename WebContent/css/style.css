@@ -1,0 +1,43 @@
+/* Custom Stylesheet */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+.nav1 {
+    height: 110px;
+    line-height: 105px;
+}
+#logo {
+	padding-top: 5px;
+    height: 100px;
+    width: 100px;
+    /*padding: 5px;
+	border:1px solid #021a40;
+    background-color:#ff0;*/
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    /*background-image: url("images/back_image.jpg");*/
+    /*background-color: #ededed*/
+}
+
+.withbg{
+	flex: 1 0 auto;
+    background-image: url('../photos/bg.jpg');
+    background-color: rgba(144, 119, 35, 0.41);
+}
+
+.para{
+    text-indent: 3em; 
+    text-align: justify; 
+    text-justify: inter-word;
+}
