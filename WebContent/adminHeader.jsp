@@ -14,7 +14,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-<link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="css/ionicons.min.css">
 <link rel="stylesheet" href="css/AdminLTE.min.css">
@@ -23,7 +23,7 @@
 
 <link rel="icon" href="photos/daiict.png" />
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed">
 	<%
 		AdminBean adminBeanHeader = (AdminBean) session.getAttribute("adminBean");
 
@@ -65,7 +65,7 @@
 				</div>
 			</nav>
 		</header>
-		<aside class="main-sidebar" style="min-height: 850px;">
+		<aside class="main-sidebar" style="min-height: 900px;">
 			<section class="sidebar">
 				<div class="user-panel">
 					<div class="pull-left image">
@@ -84,7 +84,17 @@
 					<li class=" treeview"><a href="adminDashBoard.jsp"> <i
 							class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right"></i>-->
 					</a></li>
-
+	
+					
+					
+					<li class="treeview"><a href="QuestionsListServlet"> <i
+							class="fa fa-plus-square"></i> <span>Management</span> <i
+							class="fa fa-angle-left pull-right"></i>
+					</a>
+						<ul class="treeview-menu">
+					
+					
+					
 					<!-- -----------------------------------Questions-------------------------------   -->
 
 					<li class="treeview"><a href="QuestionsListServlet"> <i
@@ -137,7 +147,7 @@
 						</ul></li>
 
 					<!-- -----------------------------------Questions close-------------------------------   -->
-
+					
 
 					<li class="treeview"><a href="AdminListServlet"> <i
 							class="fa fa-user-secret"></i> <span>Admin Management</span> <i
@@ -209,6 +219,8 @@
 									Term List</a></li>
 						</ul></li>
 
+				
+				   </ul></li>
 
 
 					<li class="treeview"><a href="FeedbackListServlet"> <i
@@ -237,6 +249,8 @@
 									Pg Question Average</a></li>
 							<li><a href="UgPgAvgServlet"><i class="fa fa-gg"></i> Ug
 									- PG Average</a></li>
+							<li><a href="GetUGCompeleteDetailsServlet"><i class="fa fa-gg"></i> UG Average</a></li>
+							<li><a href="GetPGCompleteDetailsServlet"><i class="fa fa-gg"></i> PG Average</a></li>
 						</ul></li>
 
 
@@ -255,7 +269,7 @@
 				</ul>
 			</section>
 		</aside>
-		<div class="content-wrapper" style="min-height: 850px; height: 850px;">
+		<div class="content-wrapper" style="min-height: 900px; height: 900px;">
 			<section class="content-header">
 				<h1>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small>

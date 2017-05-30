@@ -56,7 +56,7 @@
 					<label class="col-sm-2 control-label"></label>
 					<input type="reset" value="Reset" name="reset" class="btn  btn-danger">
 						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-					<input type="Submit" value="Ragister" name="submit" class="btn btn-success">
+					<input type="Submit" value="Add" name="submit" class="btn btn-success">
 			</form>
 		</div>
 	</div>

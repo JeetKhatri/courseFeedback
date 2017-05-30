@@ -11,7 +11,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<center><h1>PG Details</h1></center>
+<form action="adminDashBoard.jsp" method="post">
+<input type="submit" value="Home">
+</form>
+<h1 align="center">PG Details</h1>
 	<table border="1" align="center">
 		<tr>
 			<th>Course Name</th>
@@ -34,7 +37,7 @@
 			for (CourseQuestionAvgTabularBean bean : list) {
 		%>
 		<tr>
-			<td><%=bean.getCourseCode()%></td>
+			<td><%=bean.getCourseName()%></td>
 			<td><%=bean.getL()%></td>
 			<td><%=bean.getT()%></td>
 			<td><%=bean.getP()%></td>

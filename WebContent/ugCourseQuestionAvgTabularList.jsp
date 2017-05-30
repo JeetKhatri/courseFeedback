@@ -11,6 +11,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<body>
+<form action="adminDashBoard.jsp" method="post">
+<input type="submit" value="Home">
+</form>
 <center><h1>UG Details</h1></center>
 	<table border="1" align="center">
 		<tr>

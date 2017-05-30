@@ -166,7 +166,7 @@
 
 
 					<br /> <br /> <br /> <input type="reset" value="Reset"
-						name="reset" class="btn  btn-danger">
+						name="reset" class="btn  btn-danger"><label class="col-sm-2 control-label"></label>
 					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 					<input type="Submit" value="Insert" name="submit"
 						class="btn btn-success">
