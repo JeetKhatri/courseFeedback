@@ -38,7 +38,7 @@
 			for (CourseQuestionAvgTabularBean bean : list) {
 		%>
 		<tr>
-			<td><%=bean.getCourseName()%></td>
+			<td><%=bean.getCourseCode()%></td>
 			<td><%=bean.getL()%></td>
 			<td><%=bean.getT()%></td>
 			<td><%=bean.getP()%></td>
@@ -60,7 +60,7 @@
 			<%
 				} else {
 			%>
-			<td>0.0</td>
+			<td></td>
 			<%
 				}
 			%> 
@@ -84,7 +84,7 @@
 		
 		while(i<20)
 		{i++;%>
-		<td>0.0</td>	
+		<td></td>	
 		<%}
 		%>
 		<td colspan="2"><center>UG Avg -> <%=new FeedbackDAO().UGAvg() %></center></td>

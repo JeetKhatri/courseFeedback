@@ -18,7 +18,6 @@ public class GetUGCompeleteDetailsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<UGPGAvgBean> list2=new FeedbackDAO().getUGQuestionAVG();
 		ArrayList<CourseQuestionAvgTabularBean> list = new FeedbackDAO().getUGCompleteInfoOfCourseQuestion();

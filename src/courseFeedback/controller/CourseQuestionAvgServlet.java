@@ -20,10 +20,12 @@ public class CourseQuestionAvgServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String courseCode = request.getParameter("courseCode");
+		String yearId = request.getParameter("yearId");
+		String termId = request.getParameter("termId");
+		String courseCode = request.getParameter("code");
 		System.out.println("Course Code : -" + courseCode);
 
-		ArrayList<CourseQueestionAVGBean> courseQuestionAVG = new FeedbackDAO().getCourseQuestionAvg(courseCode);
+		ArrayList<CourseQueestionAVGBean> courseQuestionAVG = new FeedbackDAO().getCourseQuestionAvg(courseCode,yearId,termId);
 
 		
 		request.setAttribute("courseQuestionAvg", courseQuestionAVG);

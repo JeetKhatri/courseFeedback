@@ -27,7 +27,7 @@
 	<br> <br>
 	<div class="col-lg-6">
 		<div class="container">
-			<form action="AdminInsertServlet" method="post" name="Registration">
+			<form action="AdminInsertServlet" method="get" name="Registration">
 				<br />
 				<div class="row">
 					<label class="col-sm-2"> <font size="+1">Email :</font>

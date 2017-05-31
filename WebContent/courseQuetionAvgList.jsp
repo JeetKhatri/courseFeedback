@@ -35,16 +35,16 @@ td, tr, th {
 			ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans1 = (ArrayList<CourseQueestionAVGBean>) request
 					.getAttribute("courseQuestionAvg");
 		%>
-		<center>
+		<center><h4>
 			YearId :
-			<%=courseQueestionAVGBeans1.get(0).getYearId()%>
+			<b><%=courseQueestionAVGBeans1.get(0).getYearId()%></b>
 			&emsp;TermId :
-			<%=courseQueestionAVGBeans1.get(0).getTermId()%>
-			Course Name :
-			<%=courseQueestionAVGBeans1.get(0).getCourseName()%>
-			Course Code :
-			<%=courseQueestionAVGBeans1.get(0).getCourseCode()%>
-		</center>
+			<b><%=courseQueestionAVGBeans1.get(0).getTermId()%></b>
+			&emsp;Course Name :
+			<b><%=courseQueestionAVGBeans1.get(0).getCourseName()%></b>
+			&emsp;Course Code :
+			<b><%=courseQueestionAVGBeans1.get(0).getCourseCode()%></b>
+		</h4></center>
 
 		<div class="row">
 			<div class="col-xs-12">
@@ -72,7 +72,7 @@ td, tr, th {
 								<tr>
 
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getQuestionNumber()%></td>
-									<td align="center"><textarea><%=courseQueestionAVGBeans.get(i).getQuestionContent()%></textarea></td>
+									<td align="center"><textarea rows="2" cols="70"><%=courseQueestionAVGBeans.get(i).getQuestionContent()%></textarea></td>
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getAvg()%></td>
 								</tr>
 

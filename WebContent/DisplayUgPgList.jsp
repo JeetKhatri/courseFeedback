@@ -1,12 +1,12 @@
+<%@page import="courseFeedback.bean.UGPGAvgBean"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="courseFeedback.bean.CourseQueestionAVGBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Admin | Average List</title>
+<title>Admin | UG/PG List</title>
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
@@ -22,7 +22,7 @@ td, tr, th {
 	<div style="margin-top: -850px; margin-left: 250px;">
 		<section class="content content-header">
 		<h1>
-			Course Average <small>List</small>
+			UG/PG <small>List</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="adminDashBoard.jsp"><i class="fa fa-dashboard"></i>
@@ -38,41 +38,42 @@ td, tr, th {
 						<table id="example1"
 							class="table table-bordered table-hover table-striped">
 							<%
-		ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = (ArrayList<CourseQueestionAVGBean>) request
-				.getAttribute("courseQuestionAvg");
-							if(courseQueestionAVGBeans!=null){
-	%>
+								ArrayList<UGPGAvgBean> bean = (ArrayList<UGPGAvgBean>) request.getAttribute("courseQuestionAvg");
+								if (bean != null) {
+							%>
 							<thead class="gujju-theme text-uppercase">
 								<tr>
 									<th><center>YearId</center></th>
 									<th><center>TermId</center></th>
-									<th><center>Course Name</center></th>
-									<th><center>Course Code</center></th>
+									<th><center>Type</center></th>
 									<th><center>Average</center></th>
 									<th><center>Action</center></th>
 								</tr>
 							</thead>
 							<tbody>
 								<%
-								for (int i = 0; i < courseQueestionAVGBeans.size(); i++) {
+									for (UGPGAvgBean u : bean) {
 								%>
 
 								<tr>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getYearId()%></td>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getTermId()%></td>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getCourseName()%></td>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getCourseCode()%></td>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getAvg()%></td>
-									<td align="center"><a
-										href="CourseQuestionAvgServlet?yearId=<%=courseQueestionAVGBeans.get(i).getYearId()%>&code=<%=courseQueestionAVGBeans.get(i).getCourseCode()%>&termId=<%=courseQueestionAVGBeans.get(i).getTermId()%>"><img
-											src="photos/edit.ico" height="30" width="30"
-											class="img-rounded" /></a></td>
+									<td align="center"><%=u.getYearId()%></td>
+									<td align="center"><%=u.getTermId()%></td>
+									<td align="center"><%=u.getType()%></td>
+									<td align="center"><%=u.getAvg()%></td>
+									<td align="center"><a class="btn btn-primary"
+										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Course Avg</a> 
+										&emsp;&emsp;&emsp; 
+										<a class="btn btn-primary"
+										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Question Avg</a>
+										&emsp;&emsp;&emsp;
+										<a class="btn btn-primary"
+										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Tabular
+											Avg</a></td>
 								</tr>
 
 								<%
 									}
-								}
-									else {
+									} else {
 								%>
 
 								<h1>
@@ -92,3 +93,6 @@ td, tr, th {
 	</div>
 </body>
 </html>
+
+
+

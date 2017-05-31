@@ -689,4 +689,14 @@
     <servlet-name>temp</servlet-name>
     <url-pattern>/temp</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayUgPgServlet</display-name>
+    <servlet-name>DisplayUgPgServlet</servlet-name>
+    <servlet-class>courseFeedback.controller.DisplayUgPgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayUgPgServlet</servlet-name>
+    <url-pattern>/DisplayUgPgServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

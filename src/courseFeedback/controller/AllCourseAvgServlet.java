@@ -19,7 +19,12 @@ public class AllCourseAvgServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<CourseQueestionAVGBean> courseQuestionAVG = new FeedbackDAO().allCourseAvg();
+		
+		String type = request.getParameter("type");
+		String yearId = request.getParameter("yearId");
+		String termId = request.getParameter("termId");
+		System.out.println(type+" "+yearId+" "+termId+ " <<<<-----");
+		ArrayList<CourseQueestionAVGBean> courseQuestionAVG = new FeedbackDAO().allCourseAvg(yearId,termId,type);
 		
 		System.out.println(courseQuestionAVG.size() + " dlfkdof;dof");
 
