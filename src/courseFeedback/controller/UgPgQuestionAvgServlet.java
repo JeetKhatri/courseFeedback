@@ -18,7 +18,10 @@ public class UgPgQuestionAvgServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<UGPGAvgBean> ugpgAvgBeans= new FeedbackDAO().getUGQuestionAVG();
+		String type = request.getParameter("type");
+		String yearId = request.getParameter("yearId");
+		String termId = request.getParameter("termId");
+		ArrayList<UGPGAvgBean> ugpgAvgBeans= new FeedbackDAO().getUGPGQuestionAVG(yearId,termId,type);
 		request.setAttribute("ugpgQuestionAvg", ugpgAvgBeans);
 		request.getRequestDispatcher("ugpgQuestionAvg.jsp").forward(request, response);
 	}

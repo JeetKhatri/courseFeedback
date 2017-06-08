@@ -44,8 +44,7 @@ td, tr, th {
 	%>
 							<thead class="gujju-theme text-uppercase">
 								<tr>
-									<th><center>YearId</center></th>
-									<th><center>TermId</center></th>
+									<th><center>YearId - TermId</center></th>
 									<th><center>Course Name</center></th>
 									<th><center>Course Code</center></th>
 									<th><center>Average</center></th>
@@ -63,10 +62,8 @@ td, tr, th {
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getCourseName()%></td>
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getCourseCode()%></td>
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getAvg()%></td>
-									<td align="center"><a
-										href="CourseQuestionAvgServlet?yearId=<%=courseQueestionAVGBeans.get(i).getYearId()%>&code=<%=courseQueestionAVGBeans.get(i).getCourseCode()%>&termId=<%=courseQueestionAVGBeans.get(i).getTermId()%>"><img
-											src="photos/edit.ico" height="30" width="30"
-											class="img-rounded" /></a></td>
+									<td align="center"><a class="btn btn-primary"
+										href="CourseQuestionAvgServlet?yearId=<%=courseQueestionAVGBeans.get(i).getYearId()%>&code=<%=courseQueestionAVGBeans.get(i).getCourseCode()%>&termId=<%=courseQueestionAVGBeans.get(i).getTermId()%>">Question Avg</a></td>
 								</tr>
 
 								<%

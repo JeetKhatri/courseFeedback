@@ -234,26 +234,9 @@
 									class="fa fa-gg"></i> Feedback Counter List</a></li>
 						</ul></li>
 
-					<li class="treeview"><a href="courseQuestionAvgSelection.jsp">
-							<i class="fa fa-cogs"></i> <span>Average</span> <i
-							class="fa fa-angle-left pull-right"></i>
-					</a>
-						<ul class="treeview-menu">
-							<li><a href="DisplayUgPgServlet"><i
-									class="fa fa-gg"></i> Check</a></li>
-							<li><a href="courseQuestionAvgSelection.jsp"><i
-									class="fa fa-gg"></i> Course Wise Question Average</a></li>
-							<li><a href="AllCourseAvgServlet"><i class="fa fa-gg"></i>
-									All Course Average</a></li>
-							<li><a href="UGQuestionAvgServlet"><i class="fa fa-gg"></i>
-									Ug Question Average</a></li>
-							<li><a href="PgQuestionAvgServlet"><i class="fa fa-gg"></i>
-									Pg Question Average</a></li>
-							<li><a href="UgPgAvgServlet"><i class="fa fa-gg"></i> Ug
-									- PG Average</a></li>
-							<li><a href="GetUGCompeleteDetailsServlet"><i class="fa fa-gg"></i> UG Average</a></li>
-							<li><a href="GetPGCompleteDetailsServlet"><i class="fa fa-gg"></i> PG Average</a></li>
-						</ul></li>
+					<li class=" treeview"><a href="DisplayUgPgServlet"> <i
+							class="fa fa-cogs"></i> <span>Average</span>
+					</a></li>
 
 
 					<li class="treeview"><a href="generateChartByCourseCode.jsp">

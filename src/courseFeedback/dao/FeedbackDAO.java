@@ -575,13 +575,14 @@ public class FeedbackDAO {
 				pstmt.setString(2, termId);
 				pstmt.setString(3, courseCode);
 				int a = pstmt.executeUpdate();
-				System.out.println(a+" delete row");
+				System.out.println(a + " delete row");
 
 				stmt = connection.createStatement();
 				System.out.println(insertSql);
 				int r = stmt.executeUpdate(insertSql.substring(0, insertSql.length() - 1));
-				System.out.println(r+"insert row");
-				pstmt = connection.prepareStatement("select * from coursequestionavgdetails where yearId=? and termId=? and coursecode=?");
+				System.out.println(r + "insert row");
+				pstmt = connection.prepareStatement(
+						"select * from coursequestionavgdetails where yearId=? and termId=? and coursecode=?");
 				pstmt.setString(1, yearId);
 				pstmt.setString(2, termId);
 				pstmt.setString(3, courseCode);
@@ -608,18 +609,19 @@ public class FeedbackDAO {
 	}
 
 	public void getAllCourseQuestionAvg() {
-		
-		ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = new ArrayList<>();
-		String sql = "select avg(feedbackcontent) as avg,coursecode,feedBACK.questionid from feedback,questions where questions.questionid=feedback.questionid and feedbackcontent>0 and anstype='radio' group by coursecode,questionid;";
-		connection = DBConnection.getConnection();
 
+		ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = new ArrayList<>();
+		String sql = "select avg(feedbackcontent) as avg,coursecode,feedBACK.questionid from feedback,questions where questions.questionid=feedback.questionid and feedbackcontent>0 and anstype='radio' and feedback.yearId=? and feedback.termId=?  group by coursecode,questionid;";
+		connection = DBConnection.getConnection();
+		LogDetailsBean logDetailsBean = new LogDetailsDAO().termRetrive();
 		if (connection != null) {
 			try {
 				pstmt = connection.prepareStatement(sql);
+				pstmt.setString(1, logDetailsBean.getYearId());
+				pstmt.setString(2, logDetailsBean.getTermId());
 				ResultSet rs = pstmt.executeQuery();
 				CourseQueestionAVGBean courseQueestionAVGBean = new CourseQueestionAVGBean();
 				String insertSql = "insert into coursequestionavgdetails(courseCode,yearId,termId,questionId,avg) values";
-				LogDetailsBean logDetailsBean = new LogDetailsDAO().termRetrive();
 				while (rs.next()) {
 					insertSql += "('" + rs.getString("courseCode") + "'," + logDetailsBean.getYearId() + ","
 							+ logDetailsBean.getTermId() + "," + rs.getString("questionId") + ","
@@ -644,11 +646,15 @@ public class FeedbackDAO {
 
 	public ArrayList<CourseQueestionAVGBean> allCourseAvg(String yearId, String termId, String type) {
 		ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = new ArrayList<>();
-		
-		if(type.equalsIgnoreCase("ug")) type = "<500";
-		else type = ">500";
-		String sql = "select avg(feedbackcontent) AVG,feedback.courseCode,courseName,termCourseId,feedback.yearID,feedback.termID from feedback,courseDetails,questions where feedbackcontent > 0 and (substring(feedback.coursecode,3,3))"+type+"  and  feedback.courseCode=courseDetails.courseCode and feedback.questionID=questions.questionId and anstype='radio' and feedback.yearId=? and feedback.termId=? group by feedback.courseCode;";
-		
+
+		if (type.equalsIgnoreCase("ug"))
+			type = "<500";
+		else
+			type = ">500";
+		String sql = "select avg(feedbackcontent) AVG,feedback.courseCode,courseName,termCourseId,feedback.yearID,feedback.termID from feedback,courseDetails,questions where feedbackcontent > 0 and (substring(feedback.coursecode,3,3))"
+				+ type
+				+ "  and  feedback.courseCode=courseDetails.courseCode and feedback.questionID=questions.questionId and anstype='radio' and feedback.yearId=? and feedback.termId=? group by feedback.courseCode;";
+
 		connection = DBConnection.getConnection();
 		String insertSql = "insert into courseavgdetails(courseCode,yearId,termId,avg) values";
 		if (connection != null) {
@@ -658,36 +664,39 @@ public class FeedbackDAO {
 				pstmt.setString(2, termId);
 				ResultSet rs = pstmt.executeQuery();
 				CourseQueestionAVGBean courseQueestionAVGBean = new CourseQueestionAVGBean();
-				String sqlDD="";
-				boolean flag=false;
+				String sqlDD = "";
+				boolean flag = false;
 				while (rs.next()) {
-					flag=true;
+					flag = true;
 					System.out.println("inside");
 					sqlDD += ",('" + rs.getString("courseCode") + "'," + rs.getString("yearID") + ","
 							+ rs.getString("termID") + ","
 							+ String.format("%.2f", (Double.parseDouble(rs.getString("avg")) * 100) / 100) + ")";
-					System.out.println(sqlDD+"||||||||||||");
+					System.out.println(sqlDD + "||||||||||||");
 				}
 
-				String deleteThisYear = "delete from courseavgdetails where yearId=? and termId=? and (substring(coursecode,3,3))"+type;
+				String deleteThisYear = "delete from courseavgdetails where yearId=? and termId=? and (substring(coursecode,3,3))"
+						+ type;
 				pstmt = connection.prepareStatement(deleteThisYear);
 				pstmt.setString(1, yearId);
 				pstmt.setString(2, termId);
 				int a = pstmt.executeUpdate();
-				System.out.println(a+" row deleted");
+				System.out.println(a + " row deleted");
 				stmt = connection.createStatement();
-				System.out.println(insertSql+sqlDD);
-				
+				System.out.println(insertSql + sqlDD);
+
 				int r = 0;
-				if(flag==true){
-					r = stmt.executeUpdate(insertSql+sqlDD.substring(1, sqlDD.length()));
-					System.out.println(r+" row inserted");
+				if (flag == true) {
+					r = stmt.executeUpdate(insertSql + sqlDD.substring(1, sqlDD.length()));
+					System.out.println(r + " row inserted");
 				}
-				pstmt = connection.prepareStatement("select * from courseavgdetails  where yearId=? and termId=? and (substring(coursecode,3,3))"+type);
+				pstmt = connection.prepareStatement(
+						"select * from courseavgdetails  where yearId=? and termId=? and (substring(coursecode,3,3))"
+								+ type);
 				pstmt.setString(1, yearId);
 				pstmt.setString(2, termId);
 				rs = pstmt.executeQuery();
-				System.out.println(rs+" <-rs");
+				System.out.println(rs + " <-rs");
 				while (rs.next()) {
 					System.out.println("IN");
 					courseQueestionAVGBean = new CourseQueestionAVGBean();
@@ -709,14 +718,19 @@ public class FeedbackDAO {
 	}
 
 	public ArrayList<UGPGAvgBean> allUGPGAvg() {
-		String sql = "select * from courseQuestionavgDetails where avg > 0";
+		getAllCourseQuestionAvg();
+		String sql = "select * from courseQuestionavgDetails where avg > 0 and yearID = ? and termID = ?";
 		connection = DBConnection.getConnection();
 		int ugcnt = 0, pgcnt = 0;
 		double ugAvg = 0.0, pgAvg = 0.0;
+		LogDetailsBean logDetailsBean = new LogDetailsDAO().termRetrive();
 		String s = "";
 		if (connection != null) {
 			try {
 				pstmt = connection.prepareStatement(sql);
+				System.out.println("hiiiiiiiiii         "+ logDetailsBean.getYearId()+"                         "+logDetailsBean.getTermId());
+				pstmt.setString(1, logDetailsBean.getYearId());
+				pstmt.setString(2, logDetailsBean.getTermId());
 				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()) {
 					s = rs.getString("courseCode");
@@ -735,13 +749,12 @@ public class FeedbackDAO {
 			}
 		}
 		System.out.println(pgAvg + "<><><>");
-		pgAvg = pgAvg / pgcnt;
-		ugAvg = ugAvg / ugcnt;
+		/*pgAvg = pgAvg / pgcnt;
+		ugAvg = ugAvg / ugcnt;*/
 		String deleteThisYear = "delete from ugpgavgdetails where yearId= ? and termId=?";
 		try {
 
 			pstmt = connection.prepareStatement(deleteThisYear);
-			LogDetailsBean logDetailsBean = new LogDetailsDAO().termRetrive();
 			pstmt.setString(1, logDetailsBean.getYearId());
 			pstmt.setString(2, logDetailsBean.getTermId());
 			int a = pstmt.executeUpdate();
@@ -751,9 +764,26 @@ public class FeedbackDAO {
 			pstmt.setString(1, "UG");
 			pstmt.setString(2, logDetailsBean.getYearId());
 			pstmt.setString(3, logDetailsBean.getTermId());
+			if(ugAvg==0)
+			{
+				ugAvg=0.0;
+			}
+			else
+			{
+				ugAvg = ugAvg / ugcnt;
+			}
+			pstmt.setDouble(4, ugAvg);
 			pstmt.setString(4, String.format("%.2f", (Double.parseDouble(ugAvg + "") * 100) / 100));
 			int b = pstmt.executeUpdate();
 
+			if(pgAvg==0)
+			{
+				pgAvg=0.0;
+			}
+			else
+			{
+				pgAvg = pgAvg / pgcnt;
+			}
 			pstmt = connection.prepareStatement(insertsql);
 			pstmt.setString(1, "PG");
 			pstmt.setString(2, logDetailsBean.getYearId());
@@ -828,60 +858,53 @@ public class FeedbackDAO {
 		return courseFeedabck;
 	}
 
-	public ArrayList<UGPGAvgBean> getUGQuestionAVG() {
-		new FeedbackDAO().getAllCourseQuestionAvg();
-		new FeedbackDAO().allUGPGAvg();
-		new FeedbackDAO().getAllCourseQuestionAvg();
-	//	new FeedbackDAO().allCourseAvg();
+	public ArrayList<UGPGAvgBean> getUGPGQuestionAVG(String yearId, String termId, String type) {
 		ArrayList<UGPGAvgBean> ugpgAvgBeans = new ArrayList<>();
-		String sql1 = "select round(avg(avg),2) as avg,questionId from coursequestionAvgdetails where substring(coursecode,3,3)<500 and avg>0 group by questionID;";
-		String sql2 = "select round(avg(avg),2) as avg,questionId from coursequestionAvgdetails where substring(coursecode,3,3)>500 and avg>0 group by questionID;";
+		String temp = type;
+
+		if (type.equalsIgnoreCase("ug"))
+			type = "<500";
+		else
+			type = ">500";
+		String sql = "select round(avg(avg),2) as avg,questionId from coursequestionAvgdetails where substring(coursecode,3,3)"
+				+ type
+				+ " and avg>0  and coursequestionAvgdetails.yearId=? and coursequestionAvgdetails.termId=?  group by questionID;";
 
 		connection = DBConnection.getConnection();
 
-		LogDetailsBean detailsBean = new LogDetailsDAO().termRetrive();
 		if (connection != null) {
 			try {
-				pstmt = connection.prepareStatement("delete from ugpgQuestionAvgDetails where yearId="
-						+ detailsBean.getYearId() + " and termid=" + detailsBean.getTermId());
+				pstmt = connection.prepareStatement("delete from ugpgQuestionAvgDetails where yearId=" + yearId
+						+ " and type='" + temp + "' and termid=" + termId);
 				pstmt.execute();
 				String insert = "insert into ugpgQuestionAvgDetails(type,questionID,yearId,termId,Avg) value(?,?,?,?,?)";
-				pstmt = connection.prepareStatement(sql1);
+				pstmt = connection.prepareStatement(sql);
+				pstmt.setString(1, yearId);
+				pstmt.setString(2, termId);
 				rs = pstmt.executeQuery();
 
 				pstmt = connection.prepareStatement(insert);
 				while (rs.next()) {
-					pstmt.setString(1, "UG");
+					System.out.println(temp + " ddddddddslslsllsl");
+					pstmt.setString(1, temp);
 					pstmt.setString(2, "" + rs.getString("questionID"));
-					pstmt.setString(3, "" + detailsBean.getYearId());
-					pstmt.setString(4, "" + detailsBean.getTermId());
+					pstmt.setString(3, "" + yearId);
+					pstmt.setString(4, "" + termId);
 					pstmt.setString(5,
 							"" + String.format("%.2f", (Double.parseDouble(rs.getString("avg")) * 100) / 100));
 					pstmt.execute();
 				}
+			} catch (Exception e) {
 
-				pstmt = connection.prepareStatement(sql2);
-				rs = pstmt.executeQuery();
-
-				pstmt = connection.prepareStatement(insert);
-				while (rs.next()) {
-					pstmt.setString(1, "PG");
-					pstmt.setString(2, "" + rs.getString("questionID"));
-					pstmt.setString(3, "" + detailsBean.getYearId());
-					pstmt.setString(4, "" + detailsBean.getTermId());
-					pstmt.setString(5,
-							"" + String.format("%.2f", (Double.parseDouble(rs.getString("avg")) * 100) / 100));
-					pstmt.execute();
-				}
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			try {
-				pstmt = connection.prepareStatement("select * from ugpgQuestionAvgDetails where type=?");
-				pstmt.setString(1, "UG");
+				pstmt = connection.prepareStatement(
+						"select * from ugpgQuestionAvgDetails where type=? and yearId=? and termId=?");
+				pstmt.setString(1, temp);
+				pstmt.setString(2, yearId);
+				pstmt.setString(3, termId);
 				rs = pstmt.executeQuery();
 				UGPGAvgBean avgBean = new UGPGAvgBean();
 				while (rs.next()) {
@@ -908,9 +931,10 @@ public class FeedbackDAO {
 		new FeedbackDAO().getAllCourseQuestionAvg();
 		new FeedbackDAO().allUGPGAvg();
 		new FeedbackDAO().getAllCourseQuestionAvg();
-	//	new FeedbackDAO().allCourseAvg();
+		// new FeedbackDAO().allCourseAvg();
 		ArrayList<UGPGAvgBean> ugpgAvgBeans = new ArrayList<>();
-		//    select round(avg(avg),2) from coursequestionAvgdetails where substring(coursecode,3,3)<500 and avg>0 group by questionID;
+		// select round(avg(avg),2) from coursequestionAvgdetails where
+		// substring(coursecode,3,3)<500 and avg>0 group by questionID;
 		String sql1 = "select round(avg(avg),2) as avg,questionId from coursequestionAvgdetails where substring(coursecode,3,3)<500 and avg>0 group by questionID;";
 		String sql2 = "select round(avg(avg),2) as avg,questionId from coursequestionAvgdetails where substring(coursecode,3,3)>500 and avg>0 group by questionID;";
 
@@ -1074,7 +1098,7 @@ public class FeedbackDAO {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<CourseQuestionAvgTabularBean> getPGCompleteInfoOfCourseQuestion() {
 		ArrayList<CourseQuestionAvgTabularBean> list = new ArrayList<>();
 		String selectSql = "select * from courseDetails where substring(coursecode,3,3)>500 order by(coursename)";
@@ -1163,7 +1187,7 @@ public class FeedbackDAO {
 		}
 		return 0;
 	}
-	
+
 	public double UGAvg() {
 		String selectSql = "select * from ugpgavgdetails where name=?";
 		connection = DBConnection.getConnection();
@@ -1184,7 +1208,7 @@ public class FeedbackDAO {
 		return 0;
 
 	}
-	
+
 	public double PGAvg() {
 		String selectSql = "select * from ugpgavgdetails where name=?";
 		connection = DBConnection.getConnection();
@@ -1205,5 +1229,10 @@ public class FeedbackDAO {
 		return 0;
 
 	}
-	
+
+	public static void main(String[] args) {
+
+		new FeedbackDAO().getUGPGQuestionAVG("2017", "34", "UG");
+
+	}
 }

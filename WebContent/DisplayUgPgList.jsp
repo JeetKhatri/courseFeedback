@@ -64,7 +64,7 @@ td, tr, th {
 										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Course Avg</a> 
 										&emsp;&emsp;&emsp; 
 										<a class="btn btn-primary"
-										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Question Avg</a>
+										href="UgPgQuestionAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Question Avg</a>
 										&emsp;&emsp;&emsp;
 										<a class="btn btn-primary"
 										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Tabular
