@@ -23,9 +23,8 @@ public class CourseQuestionAvgTabularServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// String courseCode = "IT618";
 		String courseCode = request.getParameter("courseCode");
-		//System.out.println("Course Code : -" + courseCode);
 		new FeedbackDAO().getAllCourseQuestionAvg();
-		ArrayList<FeedbackBean> list = (ArrayList<FeedbackBean>) new FeedbackDAO().getCourseFeedback(courseCode);
+	/*	ArrayList<FeedbackBean> list = (ArrayList<FeedbackBean>) new FeedbackDAO().getCourseFeedback(courseCode);
 		ArrayList<String> questionId = new FeedbackDAO().getCourseQuestionId(courseCode);
 		ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = new FeedbackDAO().getCourseQuestionAvg(courseCode);
 
@@ -34,6 +33,6 @@ public class CourseQuestionAvgTabularServlet extends HttpServlet {
 		request.setAttribute("courseQuestionId", questionId);
 		request.setAttribute("avg", new FeedbackDAO().getCourseAvg(courseCode));
 		request.getRequestDispatcher("courseQuetionAvgTabularList.jsp").forward(request, response);
-	}
+*/	}
 
 }

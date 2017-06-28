@@ -23,7 +23,6 @@ public class CourseQuestionAvgServlet extends HttpServlet {
 		String yearId = request.getParameter("yearId");
 		String termId = request.getParameter("termId");
 		String courseCode = request.getParameter("code");
-		System.out.println("Course Code : -" + courseCode);
 
 		ArrayList<CourseQueestionAVGBean> courseQuestionAVG = new FeedbackDAO().getCourseQuestionAvg(courseCode,yearId,termId);
 

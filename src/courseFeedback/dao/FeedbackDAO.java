@@ -556,7 +556,6 @@ public class FeedbackDAO {
 		if (connection != null) {
 			try {
 				pstmt = connection.prepareStatement(sql);
-				System.out.println(courseCode + "<<<<<<<<");
 				pstmt.setString(1, courseCode);
 				pstmt.setString(2, yearId);
 				pstmt.setString(3, termId);
@@ -575,12 +574,9 @@ public class FeedbackDAO {
 				pstmt.setString(2, termId);
 				pstmt.setString(3, courseCode);
 				int a = pstmt.executeUpdate();
-				System.out.println(a + " delete row");
 
 				stmt = connection.createStatement();
-				System.out.println(insertSql);
 				int r = stmt.executeUpdate(insertSql.substring(0, insertSql.length() - 1));
-				System.out.println(r + "insert row");
 				pstmt = connection.prepareStatement(
 						"select * from coursequestionavgdetails where yearId=? and termId=? and coursecode=?");
 				pstmt.setString(1, yearId);
@@ -635,7 +631,6 @@ public class FeedbackDAO {
 				int a = pstmt.executeUpdate();
 
 				stmt = connection.createStatement();
-				System.out.println(insertSql.substring(0, insertSql.length() - 1));
 				int r = stmt.executeUpdate(insertSql.substring(0, insertSql.length() - 1));
 
 			} catch (SQLException e) {
@@ -668,11 +663,9 @@ public class FeedbackDAO {
 				boolean flag = false;
 				while (rs.next()) {
 					flag = true;
-					System.out.println("inside");
 					sqlDD += ",('" + rs.getString("courseCode") + "'," + rs.getString("yearID") + ","
 							+ rs.getString("termID") + ","
 							+ String.format("%.2f", (Double.parseDouble(rs.getString("avg")) * 100) / 100) + ")";
-					System.out.println(sqlDD + "||||||||||||");
 				}
 
 				String deleteThisYear = "delete from courseavgdetails where yearId=? and termId=? and (substring(coursecode,3,3))"
@@ -681,14 +674,11 @@ public class FeedbackDAO {
 				pstmt.setString(1, yearId);
 				pstmt.setString(2, termId);
 				int a = pstmt.executeUpdate();
-				System.out.println(a + " row deleted");
 				stmt = connection.createStatement();
-				System.out.println(insertSql + sqlDD);
 
 				int r = 0;
 				if (flag == true) {
 					r = stmt.executeUpdate(insertSql + sqlDD.substring(1, sqlDD.length()));
-					System.out.println(r + " row inserted");
 				}
 				pstmt = connection.prepareStatement(
 						"select * from courseavgdetails  where yearId=? and termId=? and (substring(coursecode,3,3))"
@@ -696,9 +686,7 @@ public class FeedbackDAO {
 				pstmt.setString(1, yearId);
 				pstmt.setString(2, termId);
 				rs = pstmt.executeQuery();
-				System.out.println(rs + " <-rs");
 				while (rs.next()) {
-					System.out.println("IN");
 					courseQueestionAVGBean = new CourseQueestionAVGBean();
 					courseQueestionAVGBean.setCourseCode(rs.getString("courseCode"));
 					courseQueestionAVGBean
@@ -710,7 +698,6 @@ public class FeedbackDAO {
 				}
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -728,7 +715,6 @@ public class FeedbackDAO {
 		if (connection != null) {
 			try {
 				pstmt = connection.prepareStatement(sql);
-				System.out.println("hiiiiiiiiii         "+ logDetailsBean.getYearId()+"                         "+logDetailsBean.getTermId());
 				pstmt.setString(1, logDetailsBean.getYearId());
 				pstmt.setString(2, logDetailsBean.getTermId());
 				ResultSet rs = pstmt.executeQuery();
@@ -748,9 +734,9 @@ public class FeedbackDAO {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(pgAvg + "<><><>");
-		/*pgAvg = pgAvg / pgcnt;
-		ugAvg = ugAvg / ugcnt;*/
+		/*
+		 * pgAvg = pgAvg / pgcnt; ugAvg = ugAvg / ugcnt;
+		 */
 		String deleteThisYear = "delete from ugpgavgdetails where yearId= ? and termId=?";
 		try {
 
@@ -764,24 +750,18 @@ public class FeedbackDAO {
 			pstmt.setString(1, "UG");
 			pstmt.setString(2, logDetailsBean.getYearId());
 			pstmt.setString(3, logDetailsBean.getTermId());
-			if(ugAvg==0)
-			{
-				ugAvg=0.0;
-			}
-			else
-			{
+			if (ugAvg == 0) {
+				ugAvg = 0.0;
+			} else {
 				ugAvg = ugAvg / ugcnt;
 			}
 			pstmt.setDouble(4, ugAvg);
 			pstmt.setString(4, String.format("%.2f", (Double.parseDouble(ugAvg + "") * 100) / 100));
 			int b = pstmt.executeUpdate();
 
-			if(pgAvg==0)
-			{
-				pgAvg=0.0;
-			}
-			else
-			{
+			if (pgAvg == 0) {
+				pgAvg = 0.0;
+			} else {
 				pgAvg = pgAvg / pgcnt;
 			}
 			pstmt = connection.prepareStatement(insertsql);
@@ -793,7 +773,7 @@ public class FeedbackDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String sqls = "select * from ugpgavgdetails";
+		String sqls = "select * from ugpgavgdetails,termDetails where ugpgavgdetails.yearId=termDetails.yearId and ugpgavgdetails.termId=termDetails.termId";
 		ArrayList<UGPGAvgBean> ugpgAvgBeans = new ArrayList<>();
 		try {
 			pstmt = connection.prepareStatement(sqls);
@@ -806,7 +786,8 @@ public class FeedbackDAO {
 				ugpgAvgBean.setType(rss.getString("name"));
 				ugpgAvgBean.setYearId(rss.getString("yearid"));
 				ugpgAvgBean.setTermId(rss.getString("termid"));
-				System.out.println(ugpgAvgBean.getAvg() + "      " + ugpgAvgBean.getType());
+				ugpgAvgBean.setYearName(rss.getString("yearName"));
+				ugpgAvgBean.setTermName(rss.getString("termName"));
 				ugpgAvgBeans.add(ugpgAvgBean);
 			}
 
@@ -814,24 +795,23 @@ public class FeedbackDAO {
 			e.printStackTrace();
 		}
 
-		System.out.println(pgAvg + ">>>>>");
 		return ugpgAvgBeans;
 	}
 
-	public List<FeedbackBean> getCourseFeedback(String courseCode) {
+	public List<FeedbackBean> getCourseFeedback(String courseCode, String termId, String yearId) {
 
 		ArrayList<FeedbackBean> courseFeedabck = new ArrayList<>();
-		String sql = "select distinct(studentdetailsid) from feedback where coursecode=?";
+		String sql = "select distinct(studentdetailsid) from feedback where coursecode=? and yearId=? and termId=?";
 		connection = DBConnection.getConnection();
 
 		if (connection != null) {
 			try {
-				System.out.println(courseCode + "LLL");
 				pstmt = connection.prepareStatement(sql);
 				pstmt.setString(1, courseCode);
+				pstmt.setString(2, yearId);
+				pstmt.setString(3, termId);
 				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()) {
-					System.out.println("hhhhhhhhhhhhhhhhh	" + rs.getString("studentdetailsid"));
 					String sql1 = "select f.questionid,questionContent,ansType,f.courseCode,cd.coursename,f.studentDetailsId,feedbackContent from feedback f,studentDetails sd,questions q,coursedetails cd where f.studentDetailsId=sd.studentDetailsId and f.courseCode=? and f.coursecode=cd.coursecode and f.studentDetailsId=? and q.questionId=f.questionId";
 					pstmt = connection.prepareStatement(sql1);
 					pstmt.setString(1, courseCode);
@@ -885,7 +865,6 @@ public class FeedbackDAO {
 
 				pstmt = connection.prepareStatement(insert);
 				while (rs.next()) {
-					System.out.println(temp + " ddddddddslslsllsl");
 					pstmt.setString(1, temp);
 					pstmt.setString(2, "" + rs.getString("questionID"));
 					pstmt.setString(3, "" + yearId);
@@ -1025,7 +1004,6 @@ public class FeedbackDAO {
 			}
 
 		}
-		System.out.println("siszzzzzzzzzzzzzz " + questionId.size());
 		return questionId;
 	}
 
@@ -1049,14 +1027,23 @@ public class FeedbackDAO {
 		return "";
 	}
 
-	public ArrayList<CourseQuestionAvgTabularBean> getUGCompleteInfoOfCourseQuestion() {
+	public ArrayList<CourseQuestionAvgTabularBean> getUGPGCompleteInfoOfCourseQuestion(String yearId, String termId,
+			String type) {
+		String temp = type;
+		if (type.equalsIgnoreCase("ug"))
+			type = "<500";
+		else
+			type = ">500";
 		ArrayList<CourseQuestionAvgTabularBean> list = new ArrayList<>();
-		String selectSql = "select * from courseDetails where substring(coursecode,3,3)<500 order by(coursename)";
+		String selectSql = "select * from courseDetails where substring(coursecode,3,3)" + type
+				+ " and yearId=? and termId=? order by(coursename)";
 		connection = DBConnection.getConnection();
 		if (connection != null) {
 			try {
 				CourseQuestionAvgTabularBean bean;
 				pstmt = connection.prepareStatement(selectSql);
+				pstmt.setString(1, yearId);
+				pstmt.setString(2, termId);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					bean = new CourseQuestionAvgTabularBean();
@@ -1067,25 +1054,32 @@ public class FeedbackDAO {
 					bean.setP(rs.getString("P"));
 
 					double avg[] = new double[21];
-					selectSql = "select * from courseQuestionAvgDetails where Coursecode=?";
+					selectSql = "select * from courseQuestionAvgDetails where Coursecode=? and yearId=? and termId=?";
 					pstmt = connection.prepareStatement(selectSql);
 					pstmt.setString(1, bean.getCourseCode());
+					pstmt.setString(2, yearId);
+					pstmt.setString(3, termId);
 					ResultSet rs1 = pstmt.executeQuery();
 					while (rs1.next()) {
 						avg[Integer.parseInt(rs1.getString("questionID"))] = rs1.getDouble("avg");
 					}
 					bean.setAvg(avg);
-					selectSql = "select * from courseAvgDetails where CourseCode=?";
+					selectSql = "select * from courseAvgDetails where CourseCode=? and yearId=? and termId=?";
 					pstmt = connection.prepareStatement(selectSql);
 					pstmt.setString(1, bean.getCourseCode());
+					pstmt.setString(2, yearId);
+					pstmt.setString(3, termId);
 					ResultSet rs3 = pstmt.executeQuery();
 					while (rs3.next()) {
+						double a=Double.parseDouble((rs3.getString("avg")));
 						bean.setCourseAvg(rs3.getString("avg"));
 					}
 
-					selectSql = "select count(distinct studentdetailsid) as cnt from feedback where coursecode=?";
+					selectSql = "select count(distinct studentdetailsid) as cnt from feedback where coursecode=? and yearID=? and termId=?";
 					pstmt = connection.prepareStatement(selectSql);
 					pstmt.setString(1, bean.getCourseCode());
+					pstmt.setString(2, yearId);
+					pstmt.setString(3, termId);
 					ResultSet rs4 = pstmt.executeQuery();
 					while (rs4.next()) {
 						bean.setNoOfStudent(Integer.parseInt(rs4.getString("cnt")));
@@ -1149,8 +1143,15 @@ public class FeedbackDAO {
 		return list;
 	}
 
-	public int totalUGStudent() {
-		String selectSql = "select count(distinct studentdetailsID) as cnt from feedback where substring(coursecode,3,3)<500;";
+	public int totalUGPGStudent(String yearId, String termId, String type) {
+		String s = "";
+		if (type.equalsIgnoreCase("ug")) {
+			s = "<500";
+		} else {
+			s = ">500";
+		}
+		String selectSql = "select count(distinct studentdetailsID) as cnt from feedback where substring(coursecode,3,3)"
+				+ s;
 		connection = DBConnection.getConnection();
 		if (connection != null) {
 
@@ -1188,14 +1189,16 @@ public class FeedbackDAO {
 		return 0;
 	}
 
-	public double UGAvg() {
-		String selectSql = "select * from ugpgavgdetails where name=?";
+	public double UGPGAvg(String yearId, String termId, String type) {
+		String selectSql = "select * from ugpgavgdetails where name=? and yearId=? and termId=?";
 		connection = DBConnection.getConnection();
 		if (connection != null) {
 
 			try {
 				pstmt = connection.prepareStatement(selectSql);
-				pstmt.setString(1, "UG");
+				pstmt.setString(1, type);
+				pstmt.setString(2, yearId);
+				pstmt.setString(3, termId);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					return rs.getDouble("avg");
@@ -1230,9 +1233,131 @@ public class FeedbackDAO {
 
 	}
 
-	public static void main(String[] args) {
+	public ArrayList<FeedbackBean> listofCourse(String arr[]) {
 
-		new FeedbackDAO().getUGPGQuestionAVG("2017", "34", "UG");
+		ArrayList<FeedbackBean> listOfFeedback = new ArrayList<>();
+
+		connection = DBConnection.getConnection();
+
+		if (connection != null) {
+			String select = "select * from courseDetails where termId=? and yearId=? order by courseName";
+			try {
+				pstmt = connection.prepareStatement(select);
+				pstmt.setString(2, arr[0]);
+				pstmt.setString(1, arr[1]);
+				rs = pstmt.executeQuery();
+				FeedbackBean feedbackBean = new FeedbackBean();
+				while (rs.next()) {
+					feedbackBean = new FeedbackBean();
+					feedbackBean.setCourseCode(rs.getString("courseCode"));
+					feedbackBean.setCourseName(rs.getString("courseName"));
+					listOfFeedback.add(feedbackBean);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return listOfFeedback;
 
 	}
+
+	public ArrayList<UGPGAvgBean> getTotal(String yearId, String termId, String type) {
+		ArrayList<UGPGAvgBean> list = new ArrayList<>();
+
+		String temp;
+
+		if (type.equalsIgnoreCase("ug"))
+			temp = "<500";
+		else
+			temp = ">500";
+
+		String sql = "select distinct sum(avg) as avg,questionId from courseQuestionAvgdetails where substring(courseCode,3,3) "
+				+ temp + " group by questionId;";
+		connection = DBConnection.getConnection();
+		if (connection != null) {
+			try {
+				pstmt = connection.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				UGPGAvgBean bean = new UGPGAvgBean();
+				while (rs.next()) {
+					bean = new UGPGAvgBean();
+					bean.setAvg(Double.parseDouble(rs.getString("avg")));
+					list.add(bean);
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return list;
+	}
+	public int[] getCount(String yearId, String termId, String type) {
+		int[] count = new int[5];
+		String t = "";
+		if (type.equalsIgnoreCase("ug")) {
+			t = "<500";
+		} else {
+			t = ">500";
+		}
+		System.out.println(termId+"  "+yearId+ " "+type + " "+ t);
+		connection = DBConnection.getConnection();
+
+		if (connection != null) {
+			String select = "select f.courseCode,cd.courseCode,f.isAvailable,f.questionId,f.yearId,f.termId,cd.courseName,"
+					+ "q.questionId,f.feedbackContent,q.questionContent "
+					+ "from questions q,feedback f,courseDetails cd where "
+					+ "f.questionId=q.questionId and f.courseCode=cd.courseCode and f.isAvailable=1"
+					+ " and f.yearId = ? and f.termId = ? and substring(f.courseCode,3,3) " + t;
+			try {
+				pstmt = connection.prepareStatement(select);
+				pstmt.setString(1, yearId);
+				pstmt.setString(2, termId);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					if (rs.getString("feedbackContent") != null) {
+						if (rs.getString("feedbackContent").equals("1")) {
+							count[0]++;
+						}
+						if (rs.getString("feedbackContent").equals("2")) {
+							count[1]++;
+						}
+						if (rs.getString("feedbackContent").equals("3")) {
+							count[2]++;
+						}
+						if (rs.getString("feedbackContent").equals("4")) {
+							count[3]++;
+						}
+						if (rs.getString("feedbackContent").equals("5")) {
+							count[4]++;
+						}
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return count;
+	}
+
 }

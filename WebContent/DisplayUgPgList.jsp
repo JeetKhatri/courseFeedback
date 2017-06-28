@@ -43,8 +43,7 @@ td, tr, th {
 							%>
 							<thead class="gujju-theme text-uppercase">
 								<tr>
-									<th><center>YearId</center></th>
-									<th><center>TermId</center></th>
+									<th><center>Year - Term</center></th>
 									<th><center>Type</center></th>
 									<th><center>Average</center></th>
 									<th><center>Action</center></th>
@@ -56,19 +55,23 @@ td, tr, th {
 								%>
 
 								<tr>
-									<td align="center"><%=u.getYearId()%></td>
-									<td align="center"><%=u.getTermId()%></td>
+									<td align="center"><%=u.getYearName()%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=u.getTermName()%></td>
 									<td align="center"><%=u.getType()%></td>
 									<td align="center"><%=u.getAvg()%></td>
-									<td align="center"><a class="btn btn-primary"
+									<td align="center">
+									<% if(u.getAvg() != 0.0){  %>
+									
+									<a class="btn btn-primary"
 										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Course Avg</a> 
 										&emsp;&emsp;&emsp; 
 										<a class="btn btn-primary"
 										href="UgPgQuestionAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Question Avg</a>
 										&emsp;&emsp;&emsp;
 										<a class="btn btn-primary"
-										href="AllCourseAvgServlet?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Tabular
-											Avg</a></td>
+										href="GetUGPGCompleteDetails?yearId=<%=u.getYearId()%>&termId=<%=u.getTermId()%>&type=<%=u.getType()%>">Total Avg Report</a>
+											
+											<%} %>
+											</td>
 								</tr>
 
 								<%

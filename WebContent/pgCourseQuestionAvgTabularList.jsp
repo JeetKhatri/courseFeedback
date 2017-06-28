@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="adminDashBoard.jsp" method="post">
+<form action="DisplayUgPgServlet" method="post">
 <input type="submit" value="Home">
 </form>
 <h1 align="center">PG Details</h1>

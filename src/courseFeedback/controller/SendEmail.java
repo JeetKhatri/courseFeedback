@@ -50,7 +50,6 @@ public class SendEmail {
 
 			Transport.send(msg);
 
-			System.out.println("Message sent to" + to + " OK.");
 
 			return "success";
 			// return 0;
@@ -58,7 +57,6 @@ public class SendEmail {
 
 			ex.printStackTrace();
 
-			System.out.println("Exception " + ex);
 			return ex.getMessage();
 			// return -1;
 
@@ -104,7 +102,6 @@ public class SendEmail {
 				toAddresses[i] = new InternetAddress(to[i]);
 			}
 
-			System.out.println("length addresses => " + toAddresses.length);
 			mimeMessage.setRecipients(Message.RecipientType.TO, toAddresses);
 			mimeMessage.setSubject(subject);
 			mimeMessage.setText(message, "utf-8");

@@ -168,4 +168,65 @@ public class TermDetailsDAO {
 		return termDetailsBean;
 	}
 
+	public String getYearName(String yearId) {
+
+		connection = DBConnection.getConnection();
+		if (connection != null) {
+
+			String selectSQL = "select * from termdetails where yearId=?";
+			try {
+				pstmt = connection.prepareStatement(selectSQL);
+
+				pstmt.setString(1, yearId);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+
+					return rs.getString("yearName");
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return "";
+	}
+	public String getTermName(String termId) {
+
+		connection = DBConnection.getConnection();
+		if (connection != null) {
+
+			String selectSQL = "select * from termdetails where termId=?";
+			try {
+				pstmt = connection.prepareStatement(selectSQL);
+
+				pstmt.setString(1, termId);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+
+					return rs.getString("termName");
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return "";
+	}
+
 }

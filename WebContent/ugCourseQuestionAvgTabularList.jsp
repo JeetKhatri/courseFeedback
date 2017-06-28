@@ -12,7 +12,7 @@
 </head>
 <body>
 <body>
-<form action="adminDashBoard.jsp" method="post">
+<form action="DisplayUgPgServlet" method="post">
 <input type="submit" value="Home">
 </form>
 <center><h1>UG Details</h1></center>
@@ -72,7 +72,7 @@
 		<tr>
 		<td colspan="2"><center>Total Student -> <%=request.getAttribute("counter")%></center></td>
 		<td colspan="2"><center>Question wise Avg-></center></td>
-		
+		<%-- 
 		<%
 		ArrayList<UGPGAvgBean> list2=new FeedbackDAO().getUGQuestionAVG();
 		int i=0;
@@ -89,7 +89,7 @@
 		%>
 		<td colspan="2"><center>UG Avg -> <%=new FeedbackDAO().UGAvg() %></center></td>
 		</tr>
-
+ --%>
 	</table>
 
 </body>

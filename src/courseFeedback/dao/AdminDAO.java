@@ -239,7 +239,6 @@ public class AdminDAO {
 
 	public boolean changePassword(String adminId, String newPassword) {
 		connection = DBConnection.getConnection();
-
 		if (connection != null) {
 			String updateSQL = "UPDATE admin set " + "adminPassword= ?" + "WHERE ADMINID=?";
 			try {
@@ -248,10 +247,42 @@ public class AdminDAO {
 				pstmt.setString(1, GenrateMathodsUtils.makeSHA512(newPassword));
 				pstmt.setString(2, adminId);
 				int rowsAffected = pstmt.executeUpdate();
-
+				
 				if (rowsAffected > 0) {
 					result = true;
+					
+				} else {
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					connection.commit();
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 
+		}
+		return result;
+	}
+	
+	
+	public boolean changeAdminPassword(String adminId, String newPassword) {
+		connection = DBConnection.getConnection();
+		if (connection != null) {
+			String updateSQL = "UPDATE admin set " + "adminPassword= ?" + "WHERE adminEmail=?";
+			try {
+				connection.setAutoCommit(false);
+				pstmt = connection.prepareStatement(updateSQL);
+				pstmt.setString(1, GenrateMathodsUtils.makeSHA512(newPassword));
+				pstmt.setString(2, adminId);
+				int rowsAffected = pstmt.executeUpdate();
+				
+				if (rowsAffected > 0) {
+					result = true;
+					
 				} else {
 				}
 			} catch (SQLException e) {

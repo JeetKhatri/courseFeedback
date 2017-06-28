@@ -23,10 +23,8 @@ public class AllCourseAvgServlet extends HttpServlet {
 		String type = request.getParameter("type");
 		String yearId = request.getParameter("yearId");
 		String termId = request.getParameter("termId");
-		System.out.println(type+" "+yearId+" "+termId+ " <<<<-----");
 		ArrayList<CourseQueestionAVGBean> courseQuestionAVG = new FeedbackDAO().allCourseAvg(yearId,termId,type);
 		
-		System.out.println(courseQuestionAVG.size() + " dlfkdof;dof");
 
 		request.setAttribute("courseQuestionAvg", courseQuestionAVG);
 		request.getRequestDispatcher("allCourseAvgList.jsp").forward(request, response);

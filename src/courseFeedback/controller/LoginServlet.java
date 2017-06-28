@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 				request.getRequestDispatcher("instruction.html").forward(request, response);
 			} else {
 				isError = true;
-				request.setAttribute("adminPassword", "<font color=red>* You are not allow to give feedback</font>");
+				request.setAttribute("adminPassword", "<font color=red>* Invalid Username Or Password</font>");
 				// request.getRequestDispatcher("login.jsp").forward(request,
 				// response);
 			}

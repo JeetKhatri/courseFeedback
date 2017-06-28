@@ -6,6 +6,23 @@ public class UGPGAvgBean {
 	private double avg;
 	private String type;
 	private String yearId, termId;
+	private String yearName,termName;
+
+	public String getYearName() {
+		return yearName;
+	}
+
+	public void setYearName(String yearName) {
+		this.yearName = yearName;
+	}
+
+	public String getTermName() {
+		return termName;
+	}
+
+	public void setTermName(String termName) {
+		this.termName = termName;
+	}
 
 	public String getType() {
 		return type;

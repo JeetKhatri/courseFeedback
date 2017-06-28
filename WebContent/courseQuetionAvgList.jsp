@@ -1,3 +1,4 @@
+<%@page import="courseFeedback.dao.TermDetailsDAO"%>
 <%@page import="courseFeedback.bean.CourseQueestionAVGBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -35,16 +36,18 @@ td, tr, th {
 			ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans1 = (ArrayList<CourseQueestionAVGBean>) request
 					.getAttribute("courseQuestionAvg");
 		%>
-		<center><h4>
-			YearId :
-			<b><%=courseQueestionAVGBeans1.get(0).getYearId()%></b>
-			&emsp;TermId :
-			<b><%=courseQueestionAVGBeans1.get(0).getTermId()%></b>
-			&emsp;Course Name :
-			<b><%=courseQueestionAVGBeans1.get(0).getCourseName()%></b>
-			&emsp;Course Code :
-			<b><%=courseQueestionAVGBeans1.get(0).getCourseCode()%></b>
-		</h4></center>
+		<center>
+			<h4>
+				<%
+					String yearName = new TermDetailsDAO().getYearName(courseQueestionAVGBeans1.get(0).getYearId());
+					String termName = new TermDetailsDAO().getTermName(courseQueestionAVGBeans1.get(0).getTermId());
+				%>
+				Year : <b><%=yearName%></b>
+				&emsp;Term : <b><%=termName%></b>
+				&emsp;Course Name : <b><%=courseQueestionAVGBeans1.get(0).getCourseName()%></b>
+				&emsp;Course Code : <b><%=courseQueestionAVGBeans1.get(0).getCourseCode()%></b>
+			</h4>
+		</center>
 
 		<div class="row">
 			<div class="col-xs-12">

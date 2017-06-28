@@ -1,4 +1,3 @@
-<%@page import="courseFeedback.bean.SemesterProgramDetailsBean"%>
 <%@page import="courseFeedback.dao.TermDetailsDAO"%>
 <%@page import="courseFeedback.bean.TermDetailsBean"%>
 <%@page import="courseFeedback.dao.FeedbackDAO"%>
@@ -10,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Admin | Course Selection</title>
+<title>Admin | Generate chart</title>
 <noscript>
 	<div style="color: #FF0000">place enable java script</div>
 </noscript>
@@ -35,19 +34,19 @@
 	<div style="margin-top: -850px; margin-left: 250px;">
 		<section class="content-header">
 		<h1>
-			Course <small>Selection</small>
+			Chart <small>Generation</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="adminDashBoard.jsp"><i class="fa fa-dashboard"></i>
 					Home</a></li>
-			<li class="active">Course</li>
+			<li class="active">Chart</li>
 		</ol>
 		</section>
 		<br> <br>
-
+		
 		<div class="col-lg-6">
 			<div class="container">
-				<form action="GetCourseFeedbackServlet" method="post"
+				<form action="GenerateUgPgChart" method="post"
 					name="Registration">
 					<br />
 					<%
@@ -60,7 +59,6 @@
 						<div class="col-lg-6">
 							<select name="cmbYearTerm" class="form-control" id="cmbYearTerm"
 								onChange="hi()">
-								<option value="0">--Select Batch--</option>
 								<%
 									List<TermDetailsBean> listOfTermDetails = new TermDetailsDAO().list();
 
@@ -87,29 +85,19 @@
 					<br />
 
 					<div class="row">
-						<label class="col-sm-2"> <font size="+1">Course
-								Selection :</font>
+						<label class="col-sm-2"> <font size="+1">Program Type :</font>
 						</label>
 						<div class="col-lg-6">
-							<%-- <select name="selCourseName" class="form-control">
-								<%
-									for (FeedbackBean bean : feedbackBeans) {
-								%>
-								<option value="<%=bean.getCourseCode()%>"><%=bean.getCourseName()%>
-									<%=bean.getCourseCode()%></option>
-								<%
-									}
-								%>
-							</select> --%>
-
-							<select class="form-control" data-placeholder="Select a Course"
-								name="selCourseName" id="selCourseName">
-							</select> <font color="red">${cmbYearTerm}</font>
+							<select class="form-control" data-placeholder="Select a Program Type"
+								name="selType" id="selType">
+								<option value="UG">UG</option>
+								<option value="PG">PG</option>
+							</select>
 						</div>
 					</div>
 					<br /> <br />
 					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-					<input type="Submit" value="Get List" name="submit"
+					<input type="Submit" value="Generate Chart" name="submit"
 						class="btn btn-success">
 
 				</form>
@@ -122,3 +110,53 @@
 
 
 
+		
+		
+<%-- 		<div class="col-lg-6">
+			<div class="container">
+				<form action="GenerateChartServlet" method="post"
+					name="Registration">
+					<br />
+
+					<div class="row">
+						<label class="col-sm-2"> <font size="+1">Subject :</font>
+						</label>
+						<div class="col-lg-6">
+							<select name="courseCode" class="form-control">
+								<option value="0 0">Select Subject</option>
+								<%
+									ArrayList<FeedbackBean> listOfFeedbackBean = new FeedbackDAO().uniqueCourse();
+									for (FeedbackBean fb : listOfFeedbackBean) {
+								%>
+								<option value="<%=fb.getCourseCode()%>"><%=fb.getCourseName() + " - " + fb.getCourseCode()%></option>
+								<%
+									}
+								%>
+							</select>
+						</div>
+					</div>
+					<br />
+					<br />
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					<input type="Submit" value="Insert" name="submit"
+						class="btn btn-success">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ --%>

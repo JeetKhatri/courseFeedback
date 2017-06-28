@@ -19,7 +19,7 @@ public class GetUGCompeleteDetailsServlet extends HttpServlet {
 		doPost(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<UGPGAvgBean> list2=new FeedbackDAO().getUGQuestionAVG();
+	/*	ArrayList<UGPGAvgBean> list2=new FeedbackDAO().getUGQuestionAVG();
 		ArrayList<CourseQuestionAvgTabularBean> list = new FeedbackDAO().getUGCompleteInfoOfCourseQuestion();
 		if(list!=null)
 		{
@@ -27,7 +27,7 @@ public class GetUGCompeleteDetailsServlet extends HttpServlet {
 			request.setAttribute("list2", list2);
 			request.setAttribute("counter", new FeedbackDAO().totalUGStudent());
 			request.getRequestDispatcher("ugCourseQuestionAvgTabularList.jsp").forward(request, response);
-		}
+		}*/
 	}
 
 }

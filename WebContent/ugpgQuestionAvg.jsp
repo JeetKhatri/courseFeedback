@@ -1,3 +1,4 @@
+<%@page import="courseFeedback.dao.TermDetailsDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="courseFeedback.bean.UGPGAvgBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -19,10 +20,14 @@ td, tr, th {
 </head>
 <body>
 	<%@include file="adminHeader.jsp"%>
+	<%
+		ArrayList<UGPGAvgBean> ugpgAvgBeans = (ArrayList<UGPGAvgBean>) request.getAttribute("ugpgQuestionAvg");
+		if (ugpgAvgBeans != null) {
+	%>
 	<div style="margin-top: -850px; margin-left: 250px;">
 		<section class="content content-header">
 		<h1>
-			UG/PG Question Average <small>List</small>
+			<%=ugpgAvgBeans.get(0).getType()%> Question Average <small>List</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="adminDashBoard.jsp"><i class="fa fa-dashboard"></i>
@@ -37,15 +42,10 @@ td, tr, th {
 					<div class="box-body">
 						<table id="example1"
 							class="table table-bordered table-hover table-striped">
-							<%
-								ArrayList<UGPGAvgBean> ugpgAvgBeans = (ArrayList<UGPGAvgBean>) request.getAttribute("ugpgQuestionAvg");
-								if (ugpgAvgBeans != null) {
-							%>
+
 							<thead class="gujju-theme text-uppercase">
 								<tr>
-									<th><center>YearId</center></th>
-									<th><center>TermId</center></th>
-									<th><center>Type</center></th>
+									<th><center>Year - Term</center></th>
 									<th><center>Question Id</center></th>
 									<th><center>Average</center></th>
 								</tr>
@@ -58,21 +58,16 @@ td, tr, th {
 								%>
 
 								<tr>
-									<td align="center"><%=avgBean.getYearId()%></td>
-									<td align="center"><%=avgBean.getTermId()%></td>
-									<td align="center"><%=avgBean.getType()%></td>
+								<%
+								String yearName = new TermDetailsDAO().getYearName(avgBean.getYearId());
+								String termName = new TermDetailsDAO().getTermName(avgBean.getTermId());
+								
+								%>
+									<td align="center"><%=yearName%>&emsp;&emsp;  <%=termName%></td>
 									<td align="center"><%=avgBean.getId()%></td>
 									<td align="center"><%=avgBean.getAvg()%></td>
 								</tr>
 
-								<%
-									}
-									} else {
-								%>
-
-								<h1>
-									<center>No Record Found....!</center>
-								</h1>
 								<%
 									}
 								%>
@@ -85,6 +80,16 @@ td, tr, th {
 		</div>
 		</section>
 	</div>
+	<%
+		} else {
+	%>
+
+	<h1>
+		<center>No Record Found....!</center>
+	</h1>
+	<%
+		}
+	%>
 </body>
 </html>
 

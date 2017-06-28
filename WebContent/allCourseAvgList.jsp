@@ -1,3 +1,4 @@
+<%@page import="courseFeedback.dao.TermDetailsDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="courseFeedback.bean.CourseQueestionAVGBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -38,38 +39,44 @@ td, tr, th {
 						<table id="example1"
 							class="table table-bordered table-hover table-striped">
 							<%
-		ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = (ArrayList<CourseQueestionAVGBean>) request
-				.getAttribute("courseQuestionAvg");
-							if(courseQueestionAVGBeans!=null){
-	%>
+								ArrayList<CourseQueestionAVGBean> courseQueestionAVGBeans = (ArrayList<CourseQueestionAVGBean>) request
+										.getAttribute("courseQuestionAvg");
+								if (courseQueestionAVGBeans != null) {
+							%>
 							<thead class="gujju-theme text-uppercase">
 								<tr>
-									<th><center>YearId - TermId</center></th>
+									<th><center>Year - Term</center></th>
 									<th><center>Course Name</center></th>
 									<th><center>Course Code</center></th>
 									<th><center>Average</center></th>
-									<th><center>Action</center></th>
+									<th><center>Question</center></th>
+									<th><center>show Feedback</center></th>
 								</tr>
 							</thead>
 							<tbody>
 								<%
-								for (int i = 0; i < courseQueestionAVGBeans.size(); i++) {
+									for (int i = 0; i < courseQueestionAVGBeans.size(); i++) {
 								%>
-
 								<tr>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getYearId()%></td>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getTermId()%></td>
-									<td align="center"><%=courseQueestionAVGBeans.get(i).getCourseName()%></td>
+								<%
+								String yearName = new TermDetailsDAO().getYearName(courseQueestionAVGBeans.get(i).getYearId());
+								String termName = new TermDetailsDAO().getTermName(courseQueestionAVGBeans.get(i).getTermId());
+								
+								%>
+									<td align="center"><%=yearName%>&emsp;&emsp;  <%=termName%></td>
+									<td align="left"><%=courseQueestionAVGBeans.get(i).getCourseName()%></td>
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getCourseCode()%></td>
 									<td align="center"><%=courseQueestionAVGBeans.get(i).getAvg()%></td>
 									<td align="center"><a class="btn btn-primary"
-										href="CourseQuestionAvgServlet?yearId=<%=courseQueestionAVGBeans.get(i).getYearId()%>&code=<%=courseQueestionAVGBeans.get(i).getCourseCode()%>&termId=<%=courseQueestionAVGBeans.get(i).getTermId()%>">Question Avg</a></td>
+										href="CourseQuestionAvgServlet?yearId=<%=courseQueestionAVGBeans.get(i).getYearId()%>&code=<%=courseQueestionAVGBeans.get(i).getCourseCode()%>&termId=<%=courseQueestionAVGBeans.get(i).getTermId()%>">Question
+											Avg</a></td>
+									<td align="center"><a class="btn btn-primary"
+										href="GetCourseFeedbackServlet?yearId=<%=courseQueestionAVGBeans.get(i).getYearId()%>&code=<%=courseQueestionAVGBeans.get(i).getCourseCode()%>&termId=<%=courseQueestionAVGBeans.get(i).getTermId()%>">Feedback</a></td>
 								</tr>
 
 								<%
 									}
-								}
-									else {
+									} else {
 								%>
 
 								<h1>

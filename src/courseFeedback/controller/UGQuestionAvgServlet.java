@@ -21,9 +21,10 @@ public class UGQuestionAvgServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<UGPGAvgBean> ugpgAvgBeans = new FeedbackDAO().getUGQuestionAVG();
+	/*	ArrayList<UGPGAvgBean> ugpgAvgBeans = new FeedbackDAO().getUGQuestionAVG();
 		request.setAttribute("ugpgQuestionAvg", ugpgAvgBeans);
 		request.getRequestDispatcher("ugpgQuestionAvg.jsp").forward(request, response);
+	*/
 	}
 
 }

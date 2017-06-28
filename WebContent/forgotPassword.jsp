@@ -11,7 +11,7 @@
 <link rel="shortcut icon" href="photos/daiict.png" />
 </head>
 <body>
-	<%@ include file="userHeader.jsp"%>
+	 <%@ include file="userHeader.jsp"%> 
 	<form action="ForgetPasswordServlet">
 		<div class="login-content withbg">
 			<div class="lc-block toggled " id="l-login">

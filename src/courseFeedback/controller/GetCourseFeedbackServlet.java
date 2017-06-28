@@ -21,9 +21,22 @@ public class GetCourseFeedbackServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String courseCode = request.getParameter("selCourseName");
-
-		ArrayList<FeedbackBean> list = (ArrayList<FeedbackBean>) new FeedbackDAO().getCourseFeedback(courseCode);
+		String yearTerm = request.getParameter("cmbYearTerm");
+		String yearId="";
+		String termId = "";
+		String courseCode = "";
+		if(yearTerm != null){
+			courseCode = request.getParameter("selCourseName");
+			String arr[] =yearTerm.split(" ");
+			yearId = arr[0];
+			termId = arr[1];
+		}else{
+			yearId  = request.getParameter("yearId");
+			termId = request.getParameter("termId");
+			courseCode = request.getParameter("code");
+		}
+		
+		ArrayList<FeedbackBean> list = (ArrayList<FeedbackBean>) new FeedbackDAO().getCourseFeedback(courseCode,termId,yearId);
 		if (list != null) {
 			request.setAttribute("listOfFeedback", list);
 			request.getRequestDispatcher("feedbackByCourse.jsp").forward(request, response);

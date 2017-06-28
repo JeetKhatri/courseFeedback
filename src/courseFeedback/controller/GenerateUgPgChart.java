@@ -16,9 +16,10 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import courseFeedback.dao.CourseDetailsDAO;
 import courseFeedback.dao.FeedbackDAO;
+import courseFeedback.dao.TermDetailsDAO;
 
 @SuppressWarnings("serial")
-public class GenerateChartServlet extends HttpServlet {
+public class GenerateUgPgChart extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -27,9 +28,12 @@ public class GenerateChartServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String courseCode = request.getParameter("selCourseName");
-		String courseName = new CourseDetailsDAO().getNameCourseCode(courseCode);
-		int[] list = new FeedbackDAO().getCount(courseCode);
+		
+		
+		String yearTerm=request.getParameter("cmbYearTerm");
+		String temp[]=yearTerm.split(" ");
+		String type = request.getParameter("selType");
+		int[] list = new FeedbackDAO().getCount(temp[0],temp[1],type);
 
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		int cnt = list[0] + list[1] + list[2] + list[3] + list[4];
@@ -52,7 +56,7 @@ public class GenerateChartServlet extends HttpServlet {
 		dataset.setValue("Option 4(%)", d);
 		dataset.setValue("Option 5(%)", e);
 
-		JFreeChart chart = ChartFactory.createPieChart(courseName + "  -  " + courseCode, // chart
+		JFreeChart chart = ChartFactory.createPieChart(type + "  -  " + new TermDetailsDAO().getYearName(temp[0])+"  "+new TermDetailsDAO().getTermName(temp[1]), // chart
 				// title
 				dataset, // data
 				true, // include legend
@@ -63,8 +67,8 @@ public class GenerateChartServlet extends HttpServlet {
 
 		int width = 640; // Width of the image
 		int height = 480;// Height of the image
-		File pieChart = new File(absoluteDiskPath + File.separator + courseCode + ".png");
-		request.setAttribute("chart", courseCode + ".png");
+		File pieChart = new File(absoluteDiskPath + File.separator + type + "  -  " + new TermDetailsDAO().getYearName(temp[0])+"  "+new TermDetailsDAO().getTermName(temp[1]) + ".png");
+		request.setAttribute("chart", type + "  -  " + new TermDetailsDAO().getYearName(temp[0])+"  "+new TermDetailsDAO().getTermName(temp[1]) + ".png");
 		ChartUtilities.saveChartAsJPEG(pieChart, chart, width, height);
 		request.getRequestDispatcher("displayChart.jsp").forward(request, response);
 	}

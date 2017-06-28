@@ -699,4 +699,54 @@
     <servlet-name>DisplayUgPgServlet</servlet-name>
     <url-pattern>/DisplayUgPgServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetUGPGComplete</display-name>
+    <servlet-name>GetUGPGComplete</servlet-name>
+    <servlet-class>courseFeedback.controller.GetUGPGComplete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetUGPGComplete</servlet-name>
+    <url-pattern>/GetUGPGComplete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetUGPGCompleteDetails</display-name>
+    <servlet-name>GetUGPGCompleteDetails</servlet-name>
+    <servlet-class>courseFeedback.controller.GetUGPGCompleteDetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetUGPGCompleteDetails</servlet-name>
+    <url-pattern>/GetUGPGCompleteDetails</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AjaxServlet3</display-name>
+    <servlet-name>AjaxServlet3</servlet-name>
+    <servlet-class>courseFeedback.controller.AjaxServlet3</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjaxServlet3</servlet-name>
+    <url-pattern>/AjaxServlet3</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChangeAdminPasswordServlet</display-name>
+    <servlet-name>ChangeAdminPasswordServlet</servlet-name>
+    <servlet-class>courseFeedback.controller.ChangeAdminPasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangeAdminPasswordServlet</servlet-name>
+    <url-pattern>/ChangeAdminPasswordServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GenerateUgPgChart</display-name>
+    <servlet-name>GenerateUgPgChart</servlet-name>
+    <servlet-class>courseFeedback.controller.GenerateUgPgChart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GenerateUgPgChart</servlet-name>
+    <url-pattern>/GenerateUgPgChart</url-pattern>
+  </servlet-mapping>
 </web-app>

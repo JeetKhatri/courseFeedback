@@ -1,3 +1,4 @@
+<%@page import="courseFeedback.bean.AdminBean"%>
 <%@page import="courseFeedback.bean.FeedbackBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -5,6 +6,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>Admin | Feedback</title>
+<link rel="icon" href="photos/daiict.png" />
 <style>
 p.break1 {
 	page-break-before: always;
@@ -17,6 +20,13 @@ p.break1 {
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 </head>
+
+<%
+	AdminBean adminBeanHeader = (AdminBean) session.getAttribute("adminBean");
+
+	if (adminBeanHeader != null) {
+%>
+
 <style>
 .table {
 	display: block;
@@ -74,17 +84,17 @@ table {
 }
 </style> -->
 <script>
-function p() {
-	window.print();
-}
-function home() {
-	window.open("adminDashBoard.jsp","_self");
-}
-function back() {
-	window.history.back();
-}
+	function p() {
+		window.print();
+	}
+	function home() {
+		window.open("adminDashBoard.jsp", "_self");
+	}
+	function back() {
+		window.history.back();
+	}
 </script>
-<script>
+<!-- <script>
 	$(document).ready(function() {
 		$("#print").click(function() {
 			$("#print").hide();
@@ -93,29 +103,41 @@ function back() {
 			p();
 		});
 	});
-</script>
-<button onclick="back()" id="back"
+</script> -->
+
+<!-- <button id="print"
+	style="margin-left: 200px; position: absolute; background-color: rgb(51, 118, 219);">
+	<i>&emsp;<b>Print</b>&emsp;
+	</i>
+</button> -->
+<style type="text/css">
+@media print {
+	#printPageButton {
+		display: none;
+	}
+}
+</style>
+<button onclick="back()" id="printPageButton"
 	style="margin-left: 10px; position: absolute; background-color: rgb(51, 118, 219);">
 	<i>&emsp;<b>Back</b>&emsp;
 	</i>
 </button>
-<button onclick="home()" id="home"
+<button onclick="home()" id="printPageButton"
 	style="margin-left: 100px; position: absolute; background-color: rgb(51, 118, 219);">
 	<i>&emsp;<b>Home</b>&emsp;
 	</i>
 </button>
-<button id="print"
+<button id="printPageButton" onClick="window.print();"
 	style="margin-left: 200px; position: absolute; background-color: rgb(51, 118, 219);">
 	<i>&emsp;<b>Print</b>&emsp;
 	</i>
 </button>
-
 <body>
 	<%
 		int qcnt = 0;
-		ArrayList<FeedbackBean> list = (ArrayList<FeedbackBean>) request.getAttribute("listOfFeedback");
-		if (list != null) {
-			int cnt = 0;
+			ArrayList<FeedbackBean> list = (ArrayList<FeedbackBean>) request.getAttribute("listOfFeedback");
+			if (list != null) {
+				int cnt = 0;
 	%>
 
 	<div class="table" style="font-size: small;">
@@ -123,25 +145,22 @@ function back() {
 			style="font-size: small; border-bottom: 1; border-left: 1;border-top=1;border-right=1; "> -->
 		<%
 			FeedbackBean bean = null;
-				int cntStudent = 0;
-				for (int i = 0; i < list.size(); i++) {
-					bean = list.get(i);
-					if (bean.getQuestionId().equals("1")) {
+					int cntStudent = 0;
+					for (int i = 0; i < list.size(); i++) {
+						bean = list.get(i);
+						if (bean.getQuestionId().equals("1")) {
 
-						//System.out.println(cnt + " lll");
-						if ((qcnt == 20 || qcnt == 17 || qcnt == 14) && cntStudent > 0) {
+							if ((qcnt == 20 || qcnt == 17 || qcnt == 14) && cntStudent > 0) {
 		%>
 		<%
-			System.out.println("Gooooooo + " + qcnt + " " + cntStudent);
+			
 		%>
 		<!-- <div style="page-break-before: always;"> -->
 		<div class="header">
 			Student -
 			<%=++cntStudent%>'s
-			<%=bean.getCourseCode()%>-<%=bean.getCourseName()%><br>
-			<br>
-			<br>
-			<br>
+			<%=bean.getCourseCode()%>-<%=bean.getCourseName()%><br> <br>
+			<br> <br>
 		</div>
 		<%-- <td><center>
 					
@@ -152,19 +171,16 @@ function back() {
 					</center></td> --%>
 		<%
 			qcnt = 0;
-						} else {
+							} else {
 		%>
 		<%
-			System.out.println("ooooo + " + qcnt + " " + cntStudent);
+			
 		%>
 		<p class="break1"></p>
 		<div class="header">
 			Student -
 			<%=++cntStudent%>'s
-			<%=bean.getCourseCode()%>-<%=bean.getCourseName()%><br>
-			<br>
-			<br>
-			<br>
+			<%=bean.getCourseCode()%>-<%=bean.getCourseName()%>
 		</div>
 		<%-- <tr>
 					<td>
@@ -179,29 +195,29 @@ function back() {
 				</tr> --%>
 		<%
 			qcnt = 0;
+							}
 						}
-					}
 		%>
 		<%-- <h1>Student - <%=bean.getCourseCode()%></h1> --%>
 		<%
 			String s1 = "unchecked", s2 = "unchecked", s3 = "unchecked", s4 = "unchecked", s5 = "unchecked";
 
-					if (bean.getAnsType().equalsIgnoreCase("radio")) {
-						if (bean.getFeedbackContent().equals("1")) {
-							s1 = "checked";
-						}
-						if (bean.getFeedbackContent().equals("2")) {
-							s2 = "checked";
-						}
-						if (bean.getFeedbackContent().equals("3")) {
-							s3 = "checked";
-						}
-						if (bean.getFeedbackContent().equals("4")) {
-							s4 = "checked";
-						}
-						if (bean.getFeedbackContent().equals("5")) {
-							s5 = "checked";
-						}
+						if (bean.getAnsType().equalsIgnoreCase("radio")) {
+							if (bean.getFeedbackContent().equals("1")) {
+								s1 = "checked";
+							}
+							if (bean.getFeedbackContent().equals("2")) {
+								s2 = "checked";
+							}
+							if (bean.getFeedbackContent().equals("3")) {
+								s3 = "checked";
+							}
+							if (bean.getFeedbackContent().equals("4")) {
+								s4 = "checked";
+							}
+							if (bean.getFeedbackContent().equals("5")) {
+								s5 = "checked";
+							}
 		%><div class="question">
 			<div class="q"><%=++qcnt + ") " + bean.getQuestionContent()%></div>
 			<div class="s">
@@ -234,7 +250,7 @@ function back() {
 			<div class="q"><%=++qcnt + ") " + bean.getQuestionContent()%></div>
 		</div>
 		<div class="question">
-			<!-- <textarea cols="91" rows="11"> --><%=bean.getFeedbackContent()%><!-- </textarea> -->
+			<textarea cols="91" rows="11" disabled="disabled"><%=bean.getFeedbackContent()%></textarea>
 		</div>
 		<%
 			}
@@ -245,10 +261,18 @@ function back() {
 			</tr> --%>
 		<%
 			}
-			}
+				}
 		%>
 	</div>
 </body>
+<%
+	} else {
+
+		request.setAttribute("msgLogin", "Please Login To Continue");
+		response.sendRedirect("login.jsp");
+
+	}
+%>
 </html>
 
 
